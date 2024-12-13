@@ -1,1 +1,0 @@
-puts "hola, bienvenido a Ruby"
