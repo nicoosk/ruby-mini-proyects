@@ -1,4 +1,5 @@
 require_relative 'contact'
+require_relative '../config/settings'
 
 class ContactManager
   def initialize
@@ -12,7 +13,7 @@ class ContactManager
     end
 
     @contacts[id] = Contact.new(id, name.downcase, number, city.downcase)
-    puts ("Contact '#{name}' created succesfully.")
+    puts Settings::MESSAGES[:contact_created] % name
   end
 
   def view_contacts
@@ -24,17 +25,17 @@ class ContactManager
   def search_by_name(name)
     @contacts.each_value do |contact|
       if contact.name == name.downcase
-        puts "Contact found. Listing..."
+        puts Settings::MESSAGES[:contact_found]
         sleep(1)
         list_contact contact
         break
       else
-        puts "Contact not found. Please, search by a valid name."
+        puts Settings::MESSAGES[:contact_not_found] % name
       end
     end
   end
 
   def list_contact(contact)
-    puts "ID: #{contact.id} \n  Name: #{contact.name.capitalize} \n  Number: #{contact.number} \n  City: #{contact.city.capitalize}"
+    puts Settings::CONTACT_VIEW_FORMAT % {id: contact.id, name: contact.name, number: contact.number, city: contact.city}
   end
 end
